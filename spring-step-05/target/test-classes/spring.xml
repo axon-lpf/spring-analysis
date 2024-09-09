@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+    <bean id="userDao" class="com.bugstack.springframework.bean.UserDao"></bean>
+
+    <bean id="userServiceImpl" class="com.bugstack.springframework.bean.impl.UserServiceImpl">
+        <property name="uId" value="100001"></property>
+        <property name="userDao"  ref="userDao"></property>
+    </bean>
+</beans>

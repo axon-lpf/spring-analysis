@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+    <bean id="userDao" class="com.bugstack.springframework.step09.UserDao" init-method="initMethod" destroy-method="destroy"></bean>
+
+    <bean id="userServiceImpl" class="com.bugstack.springframework.step09.impl.UserServiceImpl">
+        <property name="uId" value="100001"></property>
+        <property name="name" value="张无忌"></property>
+        <property name="address" value="杭州天岛湖"></property>
+        <property name="userDao" ref="proxyUserDao"></property>
+    </bean>
+
+    <bean id="proxyUserDao" class="com.bugstack.springframework.step09.ProxyBeanFactory"></bean>
+
+</beans>
