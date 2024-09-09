@@ -21,6 +21,7 @@
         <module>spring-step-12</module>
         <module>spring-step-13</module>
         <module>spring-step-14</module>
+        <module>spring-step-15</module>
     </modules>
 
     <!-- 这里添加 packaging 元素 -->
