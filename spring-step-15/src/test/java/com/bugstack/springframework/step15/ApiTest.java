@@ -1,12 +1,8 @@
 package com.bugstack.springframework.step15;
 
-import com.bugstack.springframework.beans.factory.config.BeanPostProcessor;
 import com.bugstack.springframework.beans.factory.context.support.ClassPathXmlApplicationContext;
-import com.bugstack.springframework.test.bean.IUserService;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApiTest {
 

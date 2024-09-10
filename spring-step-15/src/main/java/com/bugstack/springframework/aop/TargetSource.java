@@ -14,6 +14,8 @@ public class TargetSource {
         this.target = target;
     }
 
+
+
     public Class<?>[] getTargetClass() {
         Class<?> aClass = this.target.getClass();
         aClass = ClassUtils.isCglibProxyClass(aClass) ? aClass.getSuperclass() : aClass;

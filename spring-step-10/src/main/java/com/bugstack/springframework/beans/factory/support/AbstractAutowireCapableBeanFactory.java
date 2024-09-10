@@ -7,6 +7,7 @@ import com.bugstack.springframework.beans.factory.config.AutowireCapableBeanFact
 import com.bugstack.springframework.beans.factory.config.BeanDefinition;
 import com.bugstack.springframework.beans.factory.config.BeanPostProcessor;
 import com.bugstack.springframework.beans.factory.config.BeanReference;
+import com.bugstack.springframework.utils.ClassUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -113,7 +114,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                     value = getBean(beanReference.getBeanName());
                 }
                 //属性填充,一个巨坑。 由于 CGLIB 创建的是代理类，可以通过代理类的父类（即原始类）来获取字段。使用 getSuperclass() 方法获取原始类，并从中获取字段进行操作。
-                Class<?> aClass = bean.getClass().getSuperclass();
+                Class<?> aClass = ClassUtils.isCglibProxyClass(bean.getClass()) ? bean.getClass().getSuperclass() : bean.getClass();
                 Field declaredField = aClass.getDeclaredField(name);
                 declaredField.setAccessible(true);
                 declaredField.set(bean, value);

@@ -1,15 +1,10 @@
 package com.bugstack.springframework.step15;
 
 
-import com.bugstack.springframework.beans.factory.annotation.Value;
-import com.bugstack.springframework.stereotype.Component;
-
 import java.util.Random;
 
-@Component("userService")
 public class UserService implements IUserService {
 
-    @Value("${token}")
     private String token;
 
     @Override

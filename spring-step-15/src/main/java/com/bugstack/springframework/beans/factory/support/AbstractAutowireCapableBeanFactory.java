@@ -3,6 +3,7 @@ package com.bugstack.springframework.beans.factory.support;
 import cn.hutool.core.util.StrUtil;
 import com.bugstack.springframework.beans.factory.*;
 import com.bugstack.springframework.beans.factory.config.*;
+import com.bugstack.springframework.utils.ClassUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -23,12 +24,12 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         Object bean = null;
         try {
-            // 判断是否参与了aop切面拦截，则需要代理创建。
+    /*        // 判断是否参与了aop切面拦截，则需要代理创建。
             bean = resolveBeforeInstantiation(beanName, beanDefinition);
             if (null != bean) {
                 //创建代理对象后，不进行后面的实例化、属性填充、前置处理器的流程，直接返回代理对象
                 return bean;
-            }
+            }*/
             bean = beanDefinition.getBeanClass().newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -56,13 +57,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object... args) {
 
-        // 判断是否返回代理 Bean 对象
-        Object bean = resolveBeforeInstantiation(beanName, beanDefinition);
+        // 判断是否参与了aop切面拦截，则需要代理创建。
+/*        Object bean = resolveBeforeInstantiation(beanName, beanDefinition);
         if (null != bean) {
             return bean;
-        }
+        }*/
         // 创建bean实例
-        bean = createBeanInstance(beanName, beanDefinition, args);
+        Object bean = createBeanInstance(beanName, beanDefinition, args);
 
         // 在设置 Bean 属性之前，允许 BeanPostProcessor 修改属性值
         applyBeanPostProcessorsBeforeApplyingPropertyValues(beanName, bean, beanDefinition);
@@ -129,7 +130,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                     value = getBean(beanReference.getBeanName());
                 }
                 //属性填充,一个巨坑。 由于 CGLIB 创建的是代理类，可以通过代理类的父类（即原始类）来获取字段。使用 getSuperclass() 方法获取原始类，并从中获取字段进行操作。
-                Class<?> aClass = bean.getClass().getSuperclass();
+                Class<?> aClass = ClassUtils.isCglibProxyClass(bean.getClass()) ? bean.getClass().getSuperclass() : bean.getClass();
                 Field declaredField = aClass.getDeclaredField(name);
                 declaredField.setAccessible(true);
                 declaredField.set(bean, value);
@@ -262,7 +263,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      */
     protected void applyBeanPostProcessorsBeforeApplyingPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
-            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor){
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
                 PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
                 if (null != pvs) {
                     for (PropertyValue propertyValue : pvs.getPropertyValues()) {

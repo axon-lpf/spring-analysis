@@ -38,7 +38,7 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
         //    }
         // 否则会发生递归，到账栈溢出
         if (isInfrastructureClass(bean.getClass())) {
-            return null;
+            return bean;
         }
 
         Collection<AspectJExpressionPointcutAdvisor> advisors =
@@ -47,7 +47,7 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
         for (AspectJExpressionPointcutAdvisor advisor : advisors) {
 
             ClassFilter classFilter = advisor.getPointcut().getClassFilter();
-            if (!classFilter.matches(bean.getClass())) {
+            if (!classFilter.matches(bean.getClass())) {   //根据表达式规则去匹配， 匹配不到跳过， 匹配到进入下面的环节
                 continue;
             }
 
@@ -55,19 +55,19 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
             TargetSource targetSource = null;
 
             try {
-                targetSource = new TargetSource(bean.getClass().getDeclaredConstructor().newInstance());
+                targetSource = new TargetSource(bean);    //包装bean，包装成目标源
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            advisedSupport.setTargetSource(targetSource);
-            advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
-            advisedSupport.setInterceptor((MethodInterceptor) advisor.getAdvice());
-            advisedSupport.setProxyTargetClass(false);
+            advisedSupport.setTargetSource(targetSource);  // 目标源
+            advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher()); // 匹配规则
+            advisedSupport.setInterceptor((MethodInterceptor) advisor.getAdvice()); //代理方法
+            advisedSupport.setProxyTargetClass(false); // 设置是用jdk代理还是cglib代理
             return new ProxyFactory(advisedSupport).getProxy();
 
         }
-        return null;
+        return bean;
     }
 
     @Override
