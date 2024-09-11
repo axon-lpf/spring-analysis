@@ -94,7 +94,8 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
             advisedSupport.setTargetSource(targetSource);  // 目标源
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher()); // 匹配规则
             advisedSupport.setInterceptor((MethodInterceptor) advisor.getAdvice()); //代理方法
-            advisedSupport.setProxyTargetClass(false); // 设置是用jdk代理还是cglib代理
+            //advisedSupport.setProxyTargetClass(false); // 设置是用jdk代理还是cglib代理
+            advisedSupport.setProxyTargetClass(true);  // 这里不知道为啥又设置成cglib了，jdk代理会报错，反射赋值不成功。
             return new ProxyFactory(advisedSupport).getProxy();
 
         }

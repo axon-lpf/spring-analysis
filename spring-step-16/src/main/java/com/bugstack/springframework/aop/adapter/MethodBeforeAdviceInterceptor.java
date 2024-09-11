@@ -7,6 +7,10 @@ import org.aopalliance.intercept.MethodInvocation;
 public class MethodBeforeAdviceInterceptor implements MethodInterceptor {
 
 
+    public void setAdvice(MethodBeforeAdvice advice) {
+        this.advice = advice;
+    }
+
     private MethodBeforeAdvice advice;
 
     public MethodBeforeAdviceInterceptor() {

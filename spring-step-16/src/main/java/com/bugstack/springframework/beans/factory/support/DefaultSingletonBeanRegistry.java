@@ -51,32 +51,34 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
             }
         }
 
-        return singletonMap.get(name);
+        return singletonObject;
     }
 
     /**
-     *  将完成初始化的bean添加到以及缓存中
+     * 将完成初始化的bean添加到以及缓存中
+     *
      * @param beanName
      * @param singletonBean
      */
     @Override
     public void registerSingletonBean(String beanName, Object singletonBean) {
         //存储完成初始化的bean
-        singletonObjects.put(beanName,singletonBean);
+        singletonObjects.put(beanName, singletonBean);
         //分别移除二级和三级缓存中bean
         earlySingletonObjects.remove(beanName);
         singletonFactories.remove(beanName);
     }
 
     /**
-     *  将代理对象添加到三级缓存
+     * 将代理对象添加到三级缓存
+     *
      * @param name
      * @param singletonFactory
      */
-    protected void  addSingletonFactory(String name,ObjectFactory<?> singletonFactory){
+    protected void addSingletonFactory(String name, ObjectFactory<?> singletonFactory) {
         //如果这个bean代理对象不存在三级缓存中，则添加到三级缓存中， 并移除二级缓存中对象（可能是不存在）
-        if (!this.singletonFactories.containsKey(name)){
-            this.singletonFactories.put(name,singletonFactory);
+        if (!this.singletonFactories.containsKey(name)) {
+            this.singletonFactories.put(name, singletonFactory);
             this.earlySingletonObjects.remove(name);
         }
     }

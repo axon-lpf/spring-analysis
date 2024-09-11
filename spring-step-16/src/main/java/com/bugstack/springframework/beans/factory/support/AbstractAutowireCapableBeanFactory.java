@@ -1,5 +1,6 @@
 package com.bugstack.springframework.beans.factory.support;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.bugstack.springframework.beans.factory.config.*;
 import com.bugstack.springframework.beans.factory.*;
@@ -124,27 +125,23 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
      */
     @Override
     protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
-        try {
-            PropertyValues propertyValues = beanDefinition.getPropertyValues();
-            PropertyValue[] valuesPropertyValues = propertyValues.getPropertyValues();
-            for (PropertyValue propertyValue : valuesPropertyValues) {
-                String name = propertyValue.getName();
-                Object value = propertyValue.getValue();
-                if (value instanceof BeanReference) {
+        PropertyValues propertyValues = beanDefinition.getPropertyValues();
+        PropertyValue[] valuesPropertyValues = propertyValues.getPropertyValues();
+        for (PropertyValue propertyValue : valuesPropertyValues) {
+            String name = propertyValue.getName();
+            Object value = propertyValue.getValue();
+            if (value instanceof BeanReference) {
 
-                    BeanReference beanReference = (BeanReference) value;
-                    value = getBean(beanReference.getBeanName());
-                }
-                //属性填充,一个巨坑。 由于 CGLIB 创建的是代理类，可以通过代理类的父类（即原始类）来获取字段。使用 getSuperclass() 方法获取原始类，并从中获取字段进行操作。
-                Class<?> aClass = ClassUtils.isCglibProxyClass(bean.getClass()) ? bean.getClass().getSuperclass() : bean.getClass();
-                Field declaredField = aClass.getDeclaredField(name);
-                declaredField.setAccessible(true);
-                declaredField.set(bean, value);
+                BeanReference beanReference = (BeanReference) value;
+                value = getBean(beanReference.getBeanName());
             }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        /*    //属性填充,一个巨坑。 由于 CGLIB 创建的是代理类，可以通过代理类的父类（即原始类）来获取字段。使用 getSuperclass() 方法获取原始类，并从中获取字段进行操作。
+            Class<?> aClass = ClassUtils.isCglibProxyClass(bean.getClass()) ? bean.getClass().getSuperclass() : bean.getClass();
+            Field declaredField = aClass.getDeclaredField(name);
+            declaredField.setAccessible(true);
+            declaredField.set(bean, value);*/
+            // 反射设置属性填充
+            BeanUtil.setFieldValue(bean, name, value);
         }
     }
 

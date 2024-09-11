@@ -11,4 +11,7 @@ public class Husband {
         return "Husband.wife";
     }
 
+    public void setWife(Wife wife) {
+     this.wife = wife;
+    }
 }
