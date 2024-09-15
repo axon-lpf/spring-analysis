@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="spring-step-09" />
         <module name="spring-step-08" />
+        <module name="spring-step-19" />
         <module name="spring-step-07" />
         <module name="spring-step-18" />
         <module name="spring-step-02" />

@@ -7,7 +7,10 @@ import java.sql.SQLException;
 public abstract class DataSourceUtils {
 
     /**
-     * Obtain a Connection from the given DataSource.
+     * 每次执行sql语句时，获取一个新的数据库连接
+     *
+     * @param dataSource
+     * @return
      */
     public static Connection getConnection(DataSource dataSource) {
         try {

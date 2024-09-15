@@ -21,6 +21,12 @@ public class ApiTest {
 
 
     @Test
+    public void execute(){
+        jdbcTemplate.execute("insert into account (name, balance) values ('184172133','1000') ");
+    }
+
+
+    @Test
     public void queryForListTest() {
         List<Map<String, Object>> allResult = jdbcTemplate.queryForList("select * from account");
         for (Map<String, Object> objectMap : allResult) {
