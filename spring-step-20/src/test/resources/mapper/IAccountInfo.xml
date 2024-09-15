@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.axon.middleware.mybatis.test.IAccountInfo">
+
+    <select id="queryUserInfoById" parameterType="java.lang.String" resultType="com.axon.middleware.mybatis.test.AccountInfo">
+        SELECT name,balance
+        FROM account
+        where name = #{name}
+    </select>
+
+    <select id="queryUserList" parameterType="com.axon.middleware.mybatis.test.AccountInfo" resultType="com.axon.middleware.mybatis.test.AccountInfo">
+        SELECT name,balance
+        FROM account
+
+    </select>
+
+</mapper>

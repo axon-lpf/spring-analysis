@@ -26,6 +26,7 @@
         <module name="spring-step-15" />
         <module name="spring-step-03" />
         <module name="spring-step-14" />
+        <module name="spring-step-20" />
       </profile>
     </annotationProcessing>
   </component>
