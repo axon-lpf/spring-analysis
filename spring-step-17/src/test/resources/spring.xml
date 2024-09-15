@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans">
+
+    <bean id="husband" class="com.bugstack.springframework.test.step17.Husband">
+        <property name="wifiName" value="艾斯比"></property>
+    </bean>
+    <bean id="conversionService" class="com.bugstack.springframework.beans.factory.context.support.ConversionServiceFactoryBean">
+        <property name="converters" ref="converters"></property>
+    </bean>
+
+    <bean id="converters" class="com.bugstack.springframework.test.step17.ConvertersFactoryBean">
+    </bean>
+
+</beans>

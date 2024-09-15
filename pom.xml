@@ -8,6 +8,7 @@
     <artifactId>SpringTutoriais</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>spring-step-01</module>
         <module>spring-step-02</module>
         <module>spring-step-03</module>
         <module>spring-step-04</module>
@@ -23,6 +24,7 @@
         <module>spring-step-14</module>
         <module>spring-step-15</module>
         <module>spring-step-16</module>
+        <module>spring-step-17</module>
     </modules>
 
     <!-- 这里添加 packaging 元素 -->
@@ -60,7 +62,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.0.6</version>
+            <version>5.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
