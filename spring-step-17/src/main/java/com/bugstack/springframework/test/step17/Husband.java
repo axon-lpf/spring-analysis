@@ -1,5 +1,6 @@
 package com.bugstack.springframework.test.step17;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Husband {
@@ -13,6 +14,14 @@ public class Husband {
 
     private String wifiName;
 
+    public LocalDate getMarriageDate() {
+        return marriageDate;
+    }
+
+    public void setMarriageDate(LocalDate marriageDate) {
+        this.marriageDate = marriageDate;
+    }
+
     // 添加一个类型转换操作
-    private Date marriageDate;
+    private LocalDate marriageDate;
 }

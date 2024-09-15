@@ -132,10 +132,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             String name = propertyValue.getName();
             Object value = propertyValue.getValue();
             if (value instanceof BeanReference) {
-
                 BeanReference beanReference = (BeanReference) value;
                 value = getBean(beanReference.getBeanName());
             } else {
+                // 这里是对普通类型的转换.判断是否需要转换，如果需要，则进行转换
                 Class<?> sourceType = value.getClass();
                 Class<?> targetType = (Class<?>) TypeUtil.getFieldType(bean.getClass(), name);
                 ConversionService conversionService = getConversionService();

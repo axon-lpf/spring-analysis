@@ -48,7 +48,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         //7.注册监听事件
         registerListeners();
 
-        //8.注册设置类型转换器
+        //8.注册设置类型转换器的bean，实例化转换器bean，这里需要前置，把类型转换器注册到容器中， 然后才能对其他普通对象的属性才能转换，因为转换的时候需要从容器中获取对应的转换器，如果没有
+        //前置，普通对象属性在转换时，则是获取不到的转换器，则无法转换。
         setConversionService(beanFactory);
 
         //9.提前实例化单例Bean对象

@@ -3,11 +3,13 @@
 
     <bean id="husband" class="com.bugstack.springframework.test.step17.Husband">
         <property name="wifiName" value="艾斯比"></property>
+        <property name="marriageDate" value="2024-09-15"></property>
     </bean>
     <bean id="conversionService" class="com.bugstack.springframework.beans.factory.context.support.ConversionServiceFactoryBean">
         <property name="converters" ref="converters"></property>
     </bean>
 
+      <!--容器中设置转换工厂-->
     <bean id="converters" class="com.bugstack.springframework.test.step17.ConvertersFactoryBean">
     </bean>
 

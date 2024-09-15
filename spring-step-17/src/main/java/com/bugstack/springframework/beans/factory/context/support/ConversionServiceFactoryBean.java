@@ -33,6 +33,10 @@ public class ConversionServiceFactoryBean implements FactoryBean<ConversionServi
         return true;
     }
 
+
+    /**
+     * 初始化时注册到到容器中，将转换类型
+     */
     @Override
     public void afterPropertiesSet() {
         this.conversionService = new DefaultConversionService();
