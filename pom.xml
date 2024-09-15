@@ -28,6 +28,7 @@
         <module>spring-step-18</module>
         <module>spring-step-19</module>
         <module>spring-step-20</module>
+        <module>spring-step-21</module>
     </modules>
 
     <!-- 这里添加 packaging 元素 -->
