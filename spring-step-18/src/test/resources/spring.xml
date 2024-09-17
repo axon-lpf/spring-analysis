@@ -12,7 +12,7 @@
     </bean>
 
     <bean id="jdbcTemplate"
-          class="com.bugstack.springframework.jdbc.core.JdbcTemplate">
+          class="JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 

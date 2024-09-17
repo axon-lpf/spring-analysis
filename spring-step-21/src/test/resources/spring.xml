@@ -5,16 +5,16 @@
 	         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--   注入数据库连接池-->
-    <bean id="sqlSessionFactory" class="com.bugstack.springframework.mybatis.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory" class="com.axon.springframework.mybatis.SqlSessionFactoryBean">
         <property name="resource" value="classpath:mybatis-config-datasource.xml"/>
     </bean>
 
     <!--     提前注入扫描器-->
-    <bean class="com.bugstack.springframework.mybatis.MapperScannerConfigurer">
+    <bean class="com.axon.springframework.mybatis.MapperScannerConfigurer">
         <!-- 注入sqlSessionFactory -->
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <!-- 给出需要扫描Dao接口包 -->
-        <property name="basePackage" value="com.bugstack.springframework.test.dao"/>
+        <property name="basePackage" value="com.axon.springframework.test.dao"/>
     </bean>
 
 </beans>

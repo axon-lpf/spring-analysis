@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans>
-    <bean id="userDao" class="com.bugstack.springframework.bean.step7.impl.UserDao"></bean>
+    <bean id="userDao" class="com.axon.springframework.bean.step7.impl.UserDao"></bean>
 
-    <bean id="userServiceImpl" class="com.bugstack.springframework.bean.impl.UserServiceImpl">
+    <bean id="userServiceImpl" class="UserServiceImpl">
         <property name="uId" value="100001"></property>
         <property name="name" value="张无忌"></property>
         <property name="address" value="杭州天岛湖"></property>
         <property name="userDao" ref="userDao"></property>
     </bean>
 
-    <bean class="com.bugstack.springframework.test.MyBeanFactoryPostProcessor"/>
+    <bean class="MyBeanFactoryPostProcessor"/>
 
-    <bean class="com.bugstack.springframework.test.MyBeanPostProcessor"/>
+    <bean class="MyBeanPostProcessor"/>
 
 </beans>

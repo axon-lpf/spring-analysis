@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans>
-    <bean class="com.bugstack.springframework.beans.factory.PropertyPlaceholderConfigurer">
+    <bean class="PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:token.properties"/>
     </bean>
-    <bean id="userService" class="com.bugstack.springframework.test.bean.UserService">
+    <bean id="userService" class="UserService">
         <property name="token" value="${token}"/>
     </bean>
 

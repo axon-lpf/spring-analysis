@@ -1,7 +1,7 @@
-package com.bugstack.springframewrok.test.step17;
+package com.axon.springframewrok.test.step17;
 
-import com.bugstack.springframework.beans.factory.context.support.ClassPathXmlApplicationContext;
-import com.bugstack.springframework.test.step17.Husband;
+import com.axon.springframework.beans.factory.context.support.ClassPathXmlApplicationContext;
+import com.axon.springframework.test.step17.Husband;
 import org.testng.annotations.Test;
 
 public class ApiTest {

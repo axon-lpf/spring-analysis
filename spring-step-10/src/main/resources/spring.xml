@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans>
-    <bean class="com.bugstack.springframework.step10.ContextClosedEventListener"></bean>
-    <bean class="com.bugstack.springframework.step10.ContextRefreshedEventListener"></bean>
-    <bean class="com.bugstack.springframework.step10.CustomEventListener"></bean>
+    <bean class="ContextClosedEventListener"></bean>
+    <bean class="ContextRefreshedEventListener"></bean>
+    <bean class="CustomEventListener"></bean>
 </beans>

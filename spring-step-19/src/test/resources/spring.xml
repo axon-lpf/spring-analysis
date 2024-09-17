@@ -12,11 +12,11 @@
     </bean>
 
     <bean id="jdbcTemplate"
-          class="com.bugstack.springframework.jdbc.core.JdbcTemplate">
+          class="JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="jdbcService" class="com.bugstack.springframework.test.step19.JdbcService"/>
+    <bean id="jdbcService" class="com.axon.springframework.test.step19.JdbcService"/>
 
 
 </beans>
