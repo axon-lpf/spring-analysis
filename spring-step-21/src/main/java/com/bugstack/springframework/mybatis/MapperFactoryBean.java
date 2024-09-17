@@ -25,7 +25,7 @@ public class MapperFactoryBean<T> implements FactoryBean<T> {
     }
 
     /**
-     * 这里去代理操作
+     * 这里去代理操作，去调用指定数据库执行方法
      *
      * @return
      * @throws Exception

@@ -93,7 +93,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     @Override
     protected Object createBeanInstance(String beanName, BeanDefinition beanDefinition, Object[] args) {
         Constructor constructorToUse = null;
-        Class<?> beanClass = beanDefinition.getBeanClass();
+        Class<?> beanClass = beanDefinition.getBeanClass(); // 通过IAccountInfo 获取的实际是MapperFactoryBean, 去创建MapperFactoryBean的实例。
         //getDeclaredConstructors() 获取所有的构造函数
         Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
         for (Constructor ctor : declaredConstructors) {
