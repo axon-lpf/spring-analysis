@@ -5,6 +5,8 @@ import com.axon.springframework.beans.factory.context.support.ClassPathXmlApplic
 import com.axon.springframework.test.dao.IAccountInfo;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 
 public class ApiTest {
 
@@ -23,6 +25,9 @@ public class ApiTest {
         ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
         IAccountInfo iAccountInfo = classPathXmlApplicationContext.getBean("IAccountInfo", IAccountInfo.class);
         AccountInfo accountInfo = iAccountInfo.queryUserInfoById("黑狗"); // 这里是通过代理对象去操作数据库的
+        System.out.println(JSON.toJSONString(accountInfo));
+
+        List<AccountInfo> accountInfos = iAccountInfo.queryUserList();
         System.out.println(JSON.toJSONString(accountInfo));
     }
 }
