@@ -11,6 +11,59 @@ import org.testng.annotations.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ *  本章节主要添加了cglib的代理处理， 根据beanDefinition中存储的信息，解析出来，然后通过cglib创建对应的实例对象，存储 bean中去。
+ *
+ *  创建有两种方式：
+ *  1.1>第一种
+ *      bean = beanDefinition.getBeanClass().newInstance();
+ *  1.2>第二种
+ *       @Override
+ *     protected Object createBeanInstance(String beanName, BeanDefinition beanDefinition, Object[] args) {
+ *         Constructor constructorToUse = null;
+ *         Class<?> beanClass = beanDefinition.getBeanClass();
+ *         //TODO 解析构造函数
+ *         Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
+ *         for (Constructor ctor : declaredConstructors) {
+ *             if (null != args && ctor.getParameterTypes().length == args.length) {
+ *                 constructorToUse = ctor;
+ *                 break;
+ *             }
+ *         }
+ *         //TODO 核心的创建流程
+ *         return instantiationStrategy.instantiate(beanDefinition,beanName,constructorToUse,args);
+ *     }
+ *     // TODO 这里使用的cjlib的创建方式
+ *      @Override
+ *     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor ctor, Object[] args) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+ *         Enhancer enhancer = new Enhancer();
+ *         enhancer.setSuperclass(beanDefinition.getBeanClass());
+ *         enhancer.setCallback(new NoOp() {
+ *             @Override
+ *             public int hashCode() {
+ *                 return super.hashCode();
+ *             }
+ *         });
+ *         if (null == ctor) {
+ *             return enhancer.create();
+ *         }
+ *
+ *         return enhancer.create(ctor.getParameterTypes(), args);
+ *     }
+ *
+ *     //TODO 这里又是另一种方式， 代码中未使用
+ *      @Override
+ *     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor ctor, Object[] args) {
+ *             Class<?> beanClass = beanDefinition.getBeanClass();
+ *             if (null != args) {
+ *                 return beanClass.getDeclaredConstructor(ctor.getParameterTypes()).newInstance(args);
+ *             } else {
+ *                 return beanClass.getDeclaredConstructor().newInstance();
+ *             }
+ *     }
+ *
+ *
+ */
 public class TestFactory {
 
 
