@@ -18,6 +18,5 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
         PropertyValues propertyValues = beanDefinition.getPropertyValues();
 
         propertyValues.addPropertyValue(new PropertyValue("name", "我是一颗小小鸟"));
-
     }
 }

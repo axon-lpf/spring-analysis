@@ -17,7 +17,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         //1. 创建beanFactory,并加载BeanDefinition
         refreshBeanFactory();
 
-        //2.获取beanFactory
+        //2.获取beanFactory,
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 
         //3. 在bean对象实例化之前，执行BeanFactoryPostProcessor操作
