@@ -30,5 +30,8 @@
         <module name="spring-step-20" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SpringTutoriais" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -90,7 +90,8 @@ import org.testng.annotations.Test;
  *         userService.queryUserInfo();
  *
  */
-public class TestFactoryBean {
+public class
+TestFactoryBean {
 
     private DefaultResourceLoader resourceLoader;
 
