@@ -1,4 +1,4 @@
-package com.axon.springframework.test.bean;
+package com.axon.springframework.test.step16.bean;
 
 import com.axon.springframework.beans.factory.FactoryBean;
 

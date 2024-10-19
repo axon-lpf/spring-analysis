@@ -67,7 +67,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         if (beanDefinition.isSingleton()) {
             Object finalBean = bean;
             //创建一个代理对象，添加到三级缓存中
-            addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, beanDefinition, finalBean));
+            Object earlyBeanReference = getEarlyBeanReference(beanName, beanDefinition, finalBean);
+            addSingletonFactory(beanName, () -> earlyBeanReference);
         }
 
         // 在设置 Bean 属性之前，允许 BeanPostProcessor 修改属性值

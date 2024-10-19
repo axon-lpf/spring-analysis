@@ -1,4 +1,4 @@
-package com.axon.springframework.test.bean;
+package com.axon.springframework.test.step16.bean;
 
 /**
  *  媳妇类
