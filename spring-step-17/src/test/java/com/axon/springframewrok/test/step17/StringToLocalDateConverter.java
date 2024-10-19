@@ -1,4 +1,4 @@
-package com.axon.springframework.test.step17;
+package com.axon.springframewrok.test.step17;
 
 import com.axon.springframework.core.covert.converter.Converter;
 
