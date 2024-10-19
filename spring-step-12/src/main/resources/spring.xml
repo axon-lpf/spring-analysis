@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans>
-    <bean id="userService" class="UserServiceImpl"></bean>
-    <bean class="DefaultAdvisorAutoProxyCreator"></bean>
-    <bean id="beforeAdvice" class="UserServiceBeforeAdvice"></bean>
-    <bean id="methodInterceptor" class="MethodBeforeAdviceInterceptor">
+    <bean id="userService" class="com.axon.springframework.step12.UserServiceImpl"></bean>
+    <bean id="studentService" class="com.axon.springframework.step12.StudentServiceImpl"></bean>
+
+    <bean class="com.axon.springframework.aop.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+    <bean id="beforeAdvice" class="com.axon.springframework.step12.UserServiceBeforeAdvice"></bean>
+    <bean id="methodInterceptor" class="com.axon.springframework.step12.MethodBeforeAdviceInterceptor">
         <property name="advice" ref="beforeAdvice"></property>
     </bean>
-    <bean id="pointcutAdvisor" class="AspectJExpressionPointcutAdvisor">
+    <bean id="pointcutAdvisor" class="com.axon.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
         <property name="expression" value="execution(* IUserService.*(..))"/>
         <property name="advice" ref="methodInterceptor"/>
     </bean>
