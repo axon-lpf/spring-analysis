@@ -1,4 +1,4 @@
-package com.axon.springframework.test.bean;
+package com.axon.springframework.step14.bean;
 
 public interface  IUserService {
 

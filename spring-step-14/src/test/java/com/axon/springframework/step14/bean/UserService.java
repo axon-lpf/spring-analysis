@@ -1,6 +1,7 @@
-package com.axon.springframework.test.bean;
+package com.axon.springframework.step14.bean;
 
 
+import com.axon.springframework.beans.factory.annotation.Autowired;
 import com.axon.springframework.beans.factory.annotation.Value;
 import com.axon.springframework.stereotype.Component;
 
@@ -8,6 +9,10 @@ import java.util.Random;
 
 @Component("userService")
 public class UserService implements IUserService {
+
+
+    @Autowired
+    private IStudentService studentServiceImpl;
 
     @Value("${token}")
     private String token;
@@ -19,6 +24,7 @@ public class UserService implements IUserService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        studentServiceImpl.testQueryStudent();
         return "我是一只大傻狗" + token;
     }
 
