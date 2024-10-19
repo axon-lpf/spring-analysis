@@ -3,9 +3,11 @@ package com.axon.springframework.step15;
 
 import java.util.Random;
 
-public class UserService implements IUserService {
+public class UserServiceImpl implements IUserService {
 
     private String token;
+
+    private IStudentService studentService;
 
     @Override
     public String queryUserInfo() {
@@ -14,6 +16,7 @@ public class UserService implements IUserService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        studentService.testQueryStudent();
         return "我是一只大傻狗" + token;
     }
 

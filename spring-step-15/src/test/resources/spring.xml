@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+    <bean id="userService" class="com.axon.springframework.step15.UserServiceImpl">
+        <property name="studentService" ref="studentService"></property>
+    </bean>
+    <bean id="studentService" class="com.axon.springframework.step15.StudentServiceImpl"></bean>
+
+    <bean class="com.axon.springframework.aop.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+    <bean id="beforeAdvice" class="com.axon.springframework.step15.UserServiceBeforeAdvice"></bean>
+    <bean id="methodInterceptor" class="com.axon.springframework.aop.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"></property>
+    </bean>
+    <bean id="pointcutAdvisor" class="com.axon.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+        <property name="expression" value="execution(* com.axon.springframework.step15.IUserService.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+</beans>
