@@ -6,4 +6,6 @@
 	         http://www.springframework.org/schema/beans/spring-beans.xsd
 		 http://www.springframework.org/schema/context">
 
+    <context:component-scan base-package="com.axon.springframework.step13.bean"/>
+
 </beans>

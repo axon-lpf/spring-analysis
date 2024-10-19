@@ -1,4 +1,4 @@
-package com.axon.springframework.test.bean;
+package com.axon.springframework.step13.bean;
 
 
 import com.axon.springframework.stereotype.Component;

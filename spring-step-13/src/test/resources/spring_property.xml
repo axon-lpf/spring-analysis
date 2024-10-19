@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans>
-    <bean class="PropertyPlaceholderConfigurer">
+    <bean class="com.axon.springframework.beans.factory.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:token.properties"/>
     </bean>
-    <bean id="userService" class="UserService">
+    <bean id="userService" class="com.axon.springframework.step13.bean.UserService">
         <property name="token" value="${token}"/>
     </bean>
 
