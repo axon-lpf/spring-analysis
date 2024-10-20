@@ -69,6 +69,136 @@ import javax.sql.DataSource;
  * 小结：
  * <p>
  * 你的理解是正确的，但补充了 Spring 框架处理事务时一些更具体的细节，如事务传播、异常处理、隔离级别等。Spring 通过 ThreadLocal 来管理事务的生命周期，并确保在一个事务中使用相同的数据库连接，最终根据执行结果决定提交还是回滚。
+ *
+ *  本章主要整合了事务的理解。
+ *  核心代码：
+ *  1.1>添加事务管理器 AbstractPlatformTransactionManager
+ *      创建事务
+ *      @Override
+ *     public final TransactionStatus getTransaction(TransactionDefinition definition) throws TransactionException {
+ *         //TODO 获取一个事物
+ *         Object transaction = doGetTransaction();
+ *         if (null == definition) {  // 为空，则创建一个默认的事物
+ *             definition = new DefaultTransactionDefinition();
+ *         }
+ *         if (definition.getTimeout() < TransactionDefinition.TIMEOUT_DEFAULT) {
+ *             throw new TransactionException("Invalid transaction timeout " + definition.getTimeout());
+ *         }
+ *         // 暂定事务传播为默认的行为
+ *         DefaultTransactionStatus status = newTransactionStatus(definition, transaction, true);
+ *         // TODO 开始事务
+ *         doBegin(transaction, definition);
+ *         return status;
+ *     }
+ *
+ *  * 1.2> 开启事务的核心逻辑
+ *  *        @Override
+ *  *     protected void doBegin(Object transaction, TransactionDefinition definition) throws TransactionException {
+ *  *         DataSourceTransactionObject txObject = (DataSourceTransactionObject) transaction;
+ *  *         Connection con = null;
+ *  *         try {
+ *  *             Connection newCon = obtainDataSource().getConnection();
+ *  *             txObject.setConnectionHolder(new ConnectionHolder(newCon), true);
+ *  *
+ *  *             con = txObject.getConnectionHolder().getConnection();
+ *  *             if (con.getAutoCommit()) {
+ *  *                 con.setAutoCommit(false);
+ *  *             }
+ *  *             prepareTransactionalConnection(con, definition);
+ *  *
+ *  *             //TODO  这里去设置 当前线程的数据库连接
+ *  *             TransactionSynchronizationManager.bindResource(obtainDataSource(), txObject.getConnectionHolder());
+ *  *
+ *  *         } catch (SQLException e) {
+ *  *             try {
+ *  *                 assert con != null;
+ *  *                 con.close();
+ *  *             } catch (SQLException ex) {
+ *  *                 ex.printStackTrace();
+ *  *             }
+ *  *             txObject.setConnectionHolder(null, false);
+ *  *             throw new CannotCreateTransactionException("Could not open JDBC Connection for transaction", e);
+ *  *         }
+ *  *     }
+ *  *
+ *
+ *  1.3>获取一个事务链接， 由子类DataSourceTransactionManager去创建
+ *      @Override
+ *     protected Object doGetTransaction() throws TransactionException {
+ *         DataSourceTransactionObject txObject = new DataSourceTransactionObject();
+ *         //TODO 核心代码
+ *         ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(obtainDataSource());
+ *         txObject.setConnectionHolder(conHolder, false);
+ *         return txObject;
+ *     }
+ *
+ *         private static Object doGetResource(Object actualKey) {
+ *         // TODO  获取当前线程的value值， 如果值为空，则返回为空
+ *         Map<Object, Object> map = resources.get();
+ *         if (null == map) {
+ *             return null;
+ *         }
+ *         return map.get(actualKey);
+ *     }
+ *
+ * 1.4>TransactionSynchronizationManager 中存储链接配置
+ *      private static final ThreadLocal<Map<Object, Object>>resources=new NamedThreadLocal<>("Transactional resources");
+ *
+ *      private static Object doGetResource(Object actualKey) {
+ *         // 获取当前线程的value值， 如果值为空，则返回为空
+ *         Map<Object, Object> map = resources.get();
+ *         if (null == map) {
+ *             return null;
+ *         }
+ *         return map.get(actualKey);
+ *     }
+ *
+ *     public static void bindResource(Object key, Object value) throws IllegalStateException {
+ *         Assert.notNull(value, "Value must not be null");
+ *         Map<Object, Object> map = resources.get();
+ *         if (null == map) {
+ *             map = new HashMap<>();
+ *             resources.set(map);
+ *         }
+ *         map.put(key, value);
+ *     }
+ *
+ * 1.5 TransactionAspectSupport 事务提交的核心逻辑
+ *         protected Object invokeWithinTransaction(Method method, Class<?> targetClass, InvocationCallback invocation) throws Throwable {
+     *         TransactionAttributeSource tas = getTransactionAttributeSource();
+     *         // 查找事务注解 Transactional
+     *         TransactionAttribute txAttr = (tas != null ? tas.getTransactionAttribute(method, targetClass) : null);
+     *
+     *         //TODO 获取对应的事物管理器
+     *         PlatformTransactionManager manager = determineTransactionManager();
+     *         //获取对应执行的目标方法
+     *         String joinPointIdentification = methodIdentification(method, targetClass);
+     *         //TODO  执行之前去创建一个事物
+     *         TransactionInfo txInfo = createTransactionIfNecessary(manager, txAttr, joinPointIdentification);
+     *
+     *         Object retVal = null;
+     *         try {
+     *             //TODO  执行目标方法，即sql语句， 代理执行
+     *             retVal = invocation.proceedWithInvocation();
+     *         } catch (Throwable e) {
+     *             // 遇到异常，则回滚事务
+     *             completeTransactionAfterThrowing(txInfo, e);
+     *             throw e;
+     *         } finally {
+     *             //TODO 清除threadLocal中的value，避免内存溢出，因为与线程的声明周期一致，所以手动回收
+     *             cleanupTransactionInfo(txInfo);
+     *         }
+     *         // 最后提交事物
+     *         commitTransactionAfterReturning(txInfo);
+     *
+     *         return retVal;
+ *     }
+ *
+ * 1.6>使用处理 如单元测试
+ *
+ *
+ *
+
  */
 public class ApiTest {
 

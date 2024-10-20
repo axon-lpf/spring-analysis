@@ -12,7 +12,7 @@
     </bean>
 
     <bean id="jdbcTemplate"
-          class="JdbcTemplate">
+          class="com.axon.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
